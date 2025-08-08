@@ -1,0 +1,6 @@
+import Logger from "../../utils/logger";
+
+async function create{{FeatureNameCamel}}(data: any) { return true };
+
+const {{FeatureNameCamel}}Service = { create{{FeatureNameCamel}} };
+export default {{FeatureNameCamel}}Service;

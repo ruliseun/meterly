@@ -1,0 +1,21 @@
+import { Router } from "express";
+import { authGuard } from "../middlewares/auth.guard";
+import { validateKey } from "../config/api-key.config";
+import { ProfileTypeEnum } from "../enums/user-type.enum";
+import { validate } from "../middlewares/validate-request";
+import {{FeatureName}}Controller from "../controllers/{{featureName}}/{{featureName}}.controller";
+import { create{{FeatureNameCamel}}Validator } from "../middlewares/validators/{{featureName}}.validator";
+
+
+const router = Router();
+
+router.post(
+   "/",
+   validateKey,
+   authGuard([ProfileTypeEnum.ADMIN]),
+   create{{FeatureNameCamel}}Validator,
+   validate,
+   {{FeatureName}}Controller.create{{FeatureNameCamel}}
+)
+
+export default router;

@@ -1,0 +1,20 @@
+export interface IEnv {
+  nodeEnv?: string | undefined;
+  baseApiURL?: string | undefined;
+  API_KEY?: string | undefined;
+  AUTH_TOKEN_SECRET?: string | undefined;
+  ACCESS_TOKEN_EXPIRY?: string | undefined;
+  REFRESH_TOKEN_EXPIRY?: string | undefined;
+  databaseURL?: string | undefined;
+  databaseName?: string | undefined;
+  databaseHost?: string | undefined;
+  databaseUser?: string | undefined;
+  databasePassword?: string | undefined;
+  databasePort?: string | undefined;
+  localDatabaseUserName?: string | undefined;
+  localDatabasePassword?: string | undefined;
+  MAILGUN_API_KEY?: string | undefined;
+  MAILGUN_DOMAIN?: string | undefined;
+  frontendBaseUrl?: string | undefined;
+  fileUploadUrl?: string | undefined;
+}

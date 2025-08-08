@@ -1,0 +1,30 @@
+import { ResponseCodeEnum } from "../../enums/response-codes.enum";
+import Logger from "../../utils/logger";
+import { Request, Response } from "express";
+import { matchedData } from "express-validator";
+import {{FeatureName}}Service from "../../service/{{featureName}}/{{featureName}}.service";
+
+const create{{FeatureNameCamel}} = async (req: Request, res: Response) => {
+   const data = matchedData(req);
+   try {
+      const result = await {{FeatureName}}Service.create{{FeatureNameCamel}}(data);
+      return res.status(ResponseCodeEnum.OK).json({
+        status: ResponseCodeEnum.OK,
+        message: "request processed successfully",
+        data: result,
+      });
+   } catch (error) {
+      Logger.error("Error creating {{featureName}}:", error);
+      return res.status(error.httpStatusCode || ResponseCodeEnum.INTERNAL_SERVER_ERROR).json({
+         status: error.httpStatusCode || ResponseCodeEnum.INTERNAL_SERVER_ERROR,
+         message: error.message || "Error creating {{featureName}}",
+         data: null,
+      });
+   }
+};
+
+
+const {{FeatureName}}Controller = {
+   create{{FeatureNameCamel}}
+};
+export default {{FeatureName}}Controller;
