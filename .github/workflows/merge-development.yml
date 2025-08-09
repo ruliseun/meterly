@@ -3,6 +3,9 @@ name: Merge Development into staging
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   merge-and-deploy:
     runs-on: ubuntu-latest
