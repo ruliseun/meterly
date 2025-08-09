@@ -3,7 +3,8 @@ import Logger from "../../utils/logger";
 import { matchedData } from "express-validator";
 import AuthService from "../../service/auth.service";
 import { ILogin, IUser } from "../../interface/user.interface";
-import { DeviceTypeEnum } from "../../enums/user-type.enum";
+import { DeviceTypeEnum, UserStatusEnum } from "../../enums/user-type.enum";
+import OTPService from "../../service/otp/otp.service";
 
 const signup = async (req: Request, res: Response) => {
   const data = matchedData(req) as IUser;
@@ -14,7 +15,7 @@ const signup = async (req: Request, res: Response) => {
     return res.status(200).json({ status: 200, message: "User created successfully", data: userData });
   } catch (error) {
     Logger.error("Error creating user", error);
-    res
+    return res
       .status(error.httpStatusCode || 500)
       .json({ status: error.httpStatusCode, message: error.message || "Error occured", data: null });
   }
@@ -29,7 +30,7 @@ const login = async (req: Request, res: Response) => {
     return res.status(200).json({
       status: 200,
       message: "Login successful",
-      data: { ...loginUser, isVerified: true },
+      data: loginUser,
     });
   } catch (error) {
     Logger.error("Login error:::", error);
@@ -76,6 +77,7 @@ const forgotPasswordRequest = async (req: Request, res: Response) => {
     return res.status(200).json({
       status: 200,
       message: "Password reset otp has been sent to email address",
+      data: null
     });
   } catch (error) {
     Logger.error("Error requesting password reset:::", error);
@@ -102,57 +104,14 @@ const resetPassword = async (req: Request, res: Response) => {
   }
 };
 
-const sendVerificationEmail = async (req: Request, res: Response) => {
-  const userProfile = (req as any).profile;
-  try {
-    await AuthService.sendVerificationEmail({ email: userProfile.email, name: userProfile.name });
-
-    return res.status(200).json({
-      status: 200,
-      message: "Verification email successfully sent",
-    });
-  } catch (error) {
-    Logger.error("Error sending verification email:::", error);
-    res
-      .status(error.httpStatusCode || 500)
-      .json({ status: error.httpStatusCode, message: error.message || "Error sending verification email", data: null });
-  }
-};
-
-const resendVerificationEmail = async (req: Request, res: Response) => {
+const requestOTP = async (req: Request, res: Response) => {
   const data = matchedData(req);
   try {
-    await AuthService.resendVerificationEmail(data);
-
+    const record = await OTPService.requestOTP(data);
     return res.status(200).json({
       status: 200,
-      message: "Verification email successfully sent",
-    });
-  } catch (error) {
-    Logger.error("Error sending verification email:::", error);
-    res
-      .status(error.httpStatusCode || 500)
-      .json({ status: error.httpStatusCode, message: error.message || "Error sending verification email", data: null });
-  }
-};
-
-const verifyProfileEmail = async (_req: Request, res: Response) => {
-  try {
-    return res.status(200).json({});
-  } catch (error) {
-    Logger.error("Error verifying email:::", error);
-    res
-      .status(error.httpStatusCode || 500)
-      .json({ status: error.httpStatusCode, message: error.message || "Error verifying email", data: null });
-  }
-};
-
-const requestOTP = async (_req: Request, res: Response) => {
-  try {
-    return res.status(200).json({
-      status: 200,
-      message: "Approved or Completed successfully",
-      data: [],
+      message: "Request Completed successfully",
+      data: record,
     });
   } catch (error) {
     Logger.error("OTP Request error:::", error);
@@ -162,18 +121,62 @@ const requestOTP = async (_req: Request, res: Response) => {
   }
 };
 
-const validateOTP = async (_req: Request, res: Response) => {
+const validateOTP = async (req: Request, res: Response) => {
+  const data = matchedData(req);
   try {
+    const record = await OTPService.validateOTP(data);
+
+    if (record.isValid) {
+      await AuthService.updateRecord(record.email, { isVerified: true, status: UserStatusEnum.ACTIVE });
+    }
+
     return res.status(200).json({
       status: 200,
-      message: "Approved or Completed successfully",
-      data: [],
+      message: "Request Completed successfully",
+      data: record,
     });
   } catch (error) {
     Logger.error("OTP Validation error:::", error);
     res
       .status(error.httpStatusCode || 500)
       .json({ status: error.httpStatusCode, message: error.message || "OTP Validation Error", data: null });
+  }
+};
+
+const completeOnboarding = async (req: Request, res: Response) => {
+  const data = matchedData(req);
+  const userAgent = req.headers["user-agent"] || "";
+  try {
+    const record = await AuthService.completeOnboarding(data as any, userAgent);
+
+    return res.status(200).json({
+      status: 200,
+      message: "Onboarding completed successfully",
+      data: record,
+    });
+  } catch (error) {
+    Logger.error("Error completing onboarding:::", error);
+    res
+      .status(error.httpStatusCode || 500)
+      .json({ status: error.httpStatusCode, message: error.message || "Error completing onboarding", data: null });
+  }
+};
+
+const getProfile = async (req: Request, res: Response) => {
+  const user = (req as any).profile as IUser;
+  try {
+    const record = await AuthService.getProfile(user);
+
+    return res.status(200).json({
+      status: 200,
+      message: "Request Completed successfully",
+      data: record,
+    });
+  } catch (error) {
+    Logger.error("Error getting profile:::", error);
+    res
+      .status(error.httpStatusCode || 500)
+      .json({ status: error.httpStatusCode, message: error.message || "Error getting profile", data: null });
   }
 };
 
@@ -184,11 +187,10 @@ const AuthController = {
   logout,
   forgotPasswordRequest,
   resetPassword,
-  sendVerificationEmail,
-  verifyProfileEmail,
-  resendVerificationEmail,
   requestOTP,
   validateOTP,
+  completeOnboarding,
+  getProfile,
 };
 
 export default AuthController;

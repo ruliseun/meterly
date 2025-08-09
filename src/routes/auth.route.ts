@@ -4,15 +4,16 @@ import { validateKey } from "../config/api-key.config";
 import {
   refeshTokenValidator,
   requestOTPValidator,
+  validateCompleteOnboarding,
   validateCreateUser,
   validateEmail,
   validateLogin,
   validateLogout,
   validateOTPValidator,
   validateResetPassword,
-  verifyEmailTokenValidator,
 } from "../middlewares/validators/auth.validator";
 import AuthController from "../controllers/auth/auth.controller";
+import { validateRequiredParams } from "../middlewares/validators/validator";
 import { authGuard } from "../middlewares/auth.guard";
 
 const router = Router();
@@ -36,10 +37,17 @@ router.post(
   validate,
   AuthController.resetPassword,
 );
-router.post("/email_verification",  validateKey, authGuard(), AuthController.sendVerificationEmail);
-router.post("/send_verification", validateKey, validateEmail, validate, AuthController.resendVerificationEmail);
-router.get("/verify/:token",  verifyEmailTokenValidator, validate, AuthController.verifyProfileEmail);
+
 router.post("/request/otp", validateKey, requestOTPValidator, validate, AuthController.requestOTP);
 router.post("/validate/otp", validateKey, validateOTPValidator, validate, AuthController.validateOTP);
+router.post(
+  "/complete_onboarding/:token",
+  validateKey,
+  validateRequiredParams(["token"]),
+  validateCompleteOnboarding,
+  validate,
+  AuthController.completeOnboarding,
+);
+router.get("/profile", validateKey, authGuard(), AuthController.getProfile)
 
 export default router;

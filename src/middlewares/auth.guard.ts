@@ -9,7 +9,7 @@ import { AppDataSource } from "../data-source";
 import { UserStatusEnum } from "../enums/user-type.enum";
 import Logger from "../utils/logger";
 
-export function authGuard(_types?: string[], optional = false) {
+export function authGuard() {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       let token;
@@ -18,11 +18,6 @@ export function authGuard(_types?: string[], optional = false) {
         token = req.headers.authorization.split(" ")[1];
       } else {
         token = req.cookies?.accessToken;
-      }
-
-      if (!token) {
-        if (optional) return next();
-        return res.status(401).json({ error: true, message: "Unauthorized Access", status: "4011" });
       }
 
       const decodeToken = await JwtService.verifyToken(token);
@@ -43,7 +38,7 @@ export function authGuard(_types?: string[], optional = false) {
 
       const getUser = await userRepository.findOne({
         where: { id: sub },
-        relations: [],
+        relations: ["electricityMeters"],
       });
 
       if (!getUser || getUser.status !== UserStatusEnum.ACTIVE) {

@@ -8,3 +8,6 @@ dist/
 log/activity-dev.log
 .env
 .qodo
+desktop.ini
+Thumbs.db
+.DS_Store

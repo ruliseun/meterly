@@ -30,9 +30,6 @@ const AUTH_TOKEN_SECRET = process.env.AUTH_TOKEN_SECRET;
 const ACCESS_TOKEN_EXPIRY = process.env.AUTH_ACCESS_TOKEN_EXPIRY;
 const REFRESH_TOKEN_EXPIRY = process.env.AUTH_REFRESH_TOKEN_EXPIRY;
 
-//STORAGE
-export const fileUploadUrl = process.env.FILE_UPLOAD_URL;
-
 // FRONTEND
 export const frontendBaseUrl = process.env.FRONTEND_BASE_URL;
 
@@ -59,7 +56,6 @@ export const TOKENS = {
     MAILGUN_API_KEY,
     MAILGUN_DOMAIN,
     frontendBaseUrl,
-    fileUploadUrl
   };
 
   const missing = Object.keys(requiredEnvs)

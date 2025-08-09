@@ -18,7 +18,7 @@ interface ISendEmail {
 }
 
 const mg = mailgun({ apiKey: api_key || "", domain: mgDomain || "" });
-const senderMail = "support@bethelflow.com";
+const senderMail = "support@meterly.com";
 let transporter: Transporter;
 
 if (nodeEnv === Environments.DEVELOPMENT || nodeEnv === Environments.LOCAL) {

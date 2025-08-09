@@ -16,5 +16,4 @@ export interface IEnv {
   MAILGUN_API_KEY?: string | undefined;
   MAILGUN_DOMAIN?: string | undefined;
   frontendBaseUrl?: string | undefined;
-  fileUploadUrl?: string | undefined;
 }
