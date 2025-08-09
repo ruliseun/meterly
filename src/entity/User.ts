@@ -1,12 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  Unique,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, Unique, OneToMany, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { RefreshToken } from "./Token";
 import { UserStatusEnum } from "../enums/user-type.enum";
 import { ElectricityMeter } from "./Meter";

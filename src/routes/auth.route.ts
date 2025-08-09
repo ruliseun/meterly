@@ -18,17 +18,11 @@ import { authGuard } from "../middlewares/auth.guard";
 
 const router = Router();
 
-router.post("/login",  validateKey, validateLogin, validate, AuthController.login);
-router.post("/logout",  validateKey, validateLogout, validate, AuthController.logout);
+router.post("/login", validateKey, validateLogin, validate, AuthController.login);
+router.post("/logout", validateKey, validateLogout, validate, AuthController.logout);
 router.post("/token", validateKey, refeshTokenValidator, validate, AuthController.refreshToken);
-router.post("/register",  validateKey, validateCreateUser, validate, AuthController.signup);
-router.post(
-  "/forgot_password",
-  validateKey,
-  validateEmail,
-  validate,
-  AuthController.forgotPasswordRequest,
-);
+router.post("/register", validateKey, validateCreateUser, validate, AuthController.signup);
+router.post("/forgot_password", validateKey, validateEmail, validate, AuthController.forgotPasswordRequest);
 router.post(
   "/reset_password",
   validateKey,
@@ -48,6 +42,6 @@ router.post(
   validate,
   AuthController.completeOnboarding,
 );
-router.get("/profile", validateKey, authGuard(), AuthController.getProfile)
+router.get("/profile", validateKey, authGuard(), AuthController.getProfile);
 
 export default router;

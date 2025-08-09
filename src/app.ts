@@ -84,7 +84,7 @@ function onError(error: { syscall: string; code: string }) {
 
 async function onListening() {
   await connectDB();
-  if (nodeEnv === Environments.DEVELOPMENT || nodeEnv === Environments.PRODUCTION) {
+  if (nodeEnv === Environments.STAGING || nodeEnv === Environments.PRODUCTION) {
     try {
       Logger.info("Running database migrations...");
       await AppDataSource.runMigrations();

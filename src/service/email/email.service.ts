@@ -1,8 +1,7 @@
 import MailDev from "maildev";
 import nodemailer, { Transporter } from "nodemailer";
 import Logger from "../../utils/logger";
-import mailgun from "mailgun-js";
-import { MAILGUN_API_KEY as api_key, MAILGUN_DOMAIN as mgDomain, nodeEnv } from "../../config/env";
+import { emailPassword, emailUser, nodeEnv } from "../../config/env";
 import { Environments } from "../../enums/env.enum";
 
 interface ISendEmail {
@@ -17,7 +16,6 @@ interface ISendEmail {
   contentType?: "application/pdf" | "image/png" | "image/jpg";
 }
 
-const mg = mailgun({ apiKey: api_key || "", domain: mgDomain || "" });
 const senderMail = "support@meterly.com";
 let transporter: Transporter;
 
@@ -37,6 +35,16 @@ if (nodeEnv === Environments.DEVELOPMENT || nodeEnv === Environments.LOCAL) {
       rejectUnauthorized: false,
     },
   });
+} else {
+  transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: emailUser,
+      pass: emailPassword,
+    },
+  });
 }
 
 // eslint-disable-next-line max-params
@@ -45,27 +53,14 @@ async function sendMail({
   subject,
   text,
   html,
-  hasAttachment = false,
-  attachmentFile,
-  filename,
   sender,
-  contentType,
 }: ISendEmail) {
   const mailOptions = {
-    from: sender ? `Support <${sender}>` : `Bethel Flow <${senderMail}>`,
+    from: sender ? `Support <${sender}>` : `Meterly ⚡︎ <${senderMail}>`,
     to: receiverEmail,
     subject,
     text,
     html,
-    attachment: hasAttachment
-      ? [
-          new mg.Attachment({
-            data: attachmentFile as string | Buffer | NodeJS.ReadWriteStream,
-            filename,
-            contentType: contentType ? contentType : "application/pdf",
-          }),
-        ]
-      : undefined,
   };
 
   if (nodeEnv === Environments.DEVELOPMENT || nodeEnv === Environments.LOCAL) {
@@ -80,12 +75,10 @@ async function sendMail({
     });
   } else {
     try {
-      await mg.messages().send(mailOptions);
+      await transporter.sendMail(mailOptions);
       console.info(`Email sent: ${mailOptions.to}`);
-      Logger.info(`Email sent: ${mailOptions.to}`);
     } catch (error) {
       console.error("Error sending email", error);
-      Logger.error("Error sending email:", error);
     }
   }
 }

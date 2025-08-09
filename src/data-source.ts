@@ -30,6 +30,7 @@ let dbConfig: IDbConfig = {} as IDbConfig;
 switch (nodeEnv) {
   case Environments.LOCAL:
   case Environments.DEVELOPMENT:
+  case Environments.STAGING:
   case Environments.PRODUCTION:
     dbConfig.host = databaseHost!;
     dbConfig.port = +databasePort!;

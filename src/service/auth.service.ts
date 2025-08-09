@@ -51,7 +51,14 @@ async function createUser(data: IUser) {
 
   const requestId = await OTPService.requestOTP({ email, reset: true });
 
-  return { ...createUser, password: undefined, isVerified: false, password_reset: undefined, requestId: requestId.requestId, id: undefined, };
+  return {
+    ...createUser,
+    password: undefined,
+    isVerified: false,
+    password_reset: undefined,
+    requestId: requestId.requestId,
+    id: undefined,
+  };
 }
 
 async function loginUser(data: ILogin) {
@@ -204,7 +211,7 @@ async function completeOnboarding(data: { token: string } & UserData, userAgent:
   await updateRecord(getUser.email, { ...userPayload, loginUser: true });
   await ABSTRACT_SERVICE.createData(ElectricityMeter, {
     ...meterPayload,
-    user: getUser
+    user: getUser,
   });
 
   const loginUser = await login(getUser, userAgent, "WEB");

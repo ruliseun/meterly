@@ -8,22 +8,15 @@ import { validateRequiredParams } from "../middlewares/validators/validator";
 
 const router = Router();
 
-router.post(
-  "/add_meter",
-  validateKey,
-  authGuard(),
-  registerNewMeter,
-  validate,
-  MeterManagementController.addNewMeter,
-);
+router.post("/add_meter", validateKey, authGuard(), registerNewMeter, validate, MeterManagementController.addNewMeter);
 
 router.delete(
-   "/remove_meter/:id",
-   validateKey,
-   authGuard(),
-   validateRequiredParams(["id"]),
-   validate,
-   MeterManagementController.removeMeter,
-)
+  "/remove_meter/:id",
+  validateKey,
+  authGuard(),
+  validateRequiredParams(["id"]),
+  validate,
+  MeterManagementController.removeMeter,
+);
 
 export default router;

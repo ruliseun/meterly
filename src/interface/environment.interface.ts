@@ -13,7 +13,7 @@ export interface IEnv {
   databasePort?: string | undefined;
   localDatabaseUserName?: string | undefined;
   localDatabasePassword?: string | undefined;
-  MAILGUN_API_KEY?: string | undefined;
-  MAILGUN_DOMAIN?: string | undefined;
   frontendBaseUrl?: string | undefined;
+  emailUser?: string | undefined;
+  emailPassword?: string | undefined;
 }

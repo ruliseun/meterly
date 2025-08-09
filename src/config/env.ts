@@ -33,6 +33,10 @@ const REFRESH_TOKEN_EXPIRY = process.env.AUTH_REFRESH_TOKEN_EXPIRY;
 // FRONTEND
 export const frontendBaseUrl = process.env.FRONTEND_BASE_URL;
 
+//EMAIL
+export const emailUser = process.env.EMAIL_USER;
+export const emailPassword = process.env.EMAIL_PASSWORD;
+
 export const TOKENS = {
   auth_token_secret: AUTH_TOKEN_SECRET,
   access_token_expiry: ACCESS_TOKEN_EXPIRY,
@@ -53,9 +57,9 @@ export const TOKENS = {
     AUTH_TOKEN_SECRET,
     ACCESS_TOKEN_EXPIRY,
     REFRESH_TOKEN_EXPIRY,
-    MAILGUN_API_KEY,
-    MAILGUN_DOMAIN,
     frontendBaseUrl,
+    emailUser,
+    emailPassword,
   };
 
   const missing = Object.keys(requiredEnvs)
