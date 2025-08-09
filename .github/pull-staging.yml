@@ -1,0 +1,33 @@
+name: Merge Development into Staging
+
+on:
+  workflow_dispatch:
+
+jobs:
+  merge-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch all branches
+        run: git fetch origin
+
+      - name: Checkout staging branch
+        run: git checkout staging
+
+      - name: Merge development into staging
+        run: git merge origin/development
+
+      - name: Push changes to staging
+        run: git push origin staging
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
