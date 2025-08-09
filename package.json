@@ -1,7 +1,7 @@
 {
-  "name": "bethel-flow-backend",
+  "name": "meterly-backend",
   "version": "1.0.0",
-  "description": "API for bethelFlowApp",
+  "description": "API for Meterly backend",
   "main": "app.js",
   "scripts": {
     "dev:run": "ts-node-dev --respawn ./dist/app.js",
@@ -23,15 +23,15 @@
     "migration-prod:run": "npm run typeorm -- migration:run -d ./dist/data-source.js",
     "migration:revert": "npm run typeorm -- migration:revert -d ./dist/src/data-source.js",
     "prepare": "husky",
-    "scaffold": "node scripts/scaffold-feature.js",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org vantiklabs --project bethel-backend-node ./dist && sentry-cli sourcemaps upload --org vantiklabs --project bethel-backend-node ./dist"
+    "scaffold": "node scripts/scaffold-feature.js"
   },
   "author": "",
   "license": "ISC",
-  "husky": {
-    "hooks": {
-      "pre-commit": "eslint && prettier --check"
-    }
+  "lint-staged": {
+    "src/**/*.ts": [
+      "prettier --check",
+      "eslint"
+    ]
   },
   "dependencies": {
     "@google-cloud/storage": "^7.14.0",

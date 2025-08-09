@@ -1,1 +1,4 @@
-npm run lint && npm run format
+echo "🔍 Running Prettier check..."
+npx lint-staged
+
+echo "✅ All checks passed!"
