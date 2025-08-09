@@ -13,6 +13,7 @@ import {
   nodeEnv,
 } from "./config/env";
 import { Environments } from "./enums/env.enum";
+import { ElectricityMeter } from "./entity/Meter";
 
 interface IDbConfig {
   host: string;
@@ -22,21 +23,12 @@ interface IDbConfig {
   database: string;
 }
 
-const dbEntities = [
-  User,
-  RefreshToken,
-];
+const dbEntities = [User, RefreshToken, ElectricityMeter];
 
 let dbConfig: IDbConfig = {} as IDbConfig;
 
 switch (nodeEnv) {
   case Environments.LOCAL:
-    dbConfig.host = "localhost";
-    dbConfig.port = 5432;
-    dbConfig.username = localDatabaseUserName!;
-    dbConfig.password = localDatabasePassword!;
-    dbConfig.database = "postgres";
-    break;
   case Environments.DEVELOPMENT:
   case Environments.PRODUCTION:
     dbConfig.host = databaseHost!;
@@ -57,6 +49,9 @@ switch (nodeEnv) {
 export const AppDataSource = new DataSource({
   type: "postgres",
   ...dbConfig,
+  ssl: {
+    rejectUnauthorized: false,
+  },
   logging: false,
   entities: dbEntities,
   dropSchema: false,

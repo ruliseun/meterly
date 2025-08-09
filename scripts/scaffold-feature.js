@@ -76,7 +76,7 @@ targets.forEach(({ template, baseDir, suffix, useSubfolder }) => {
 
 const routeFile = path.join(baseSrc, "routes", "index.ts");
 const routeImportLine = `import ${featureName}Routes from "./${featureName}.route";`;
-const routeUseLine = `  app.use(\`/bethel/api/\${appVersion}/${toUnderscoreSeparator(featureName)}\`, ${featureName}Routes);`;
+const routeUseLine = `  app.use(\`/meterly/api/\${appVersion}/${toUnderscoreSeparator(featureName)}\`, ${featureName}Routes);`;
 
 if (fs.existsSync(routeFile)) {
   let lines = fs.readFileSync(routeFile, "utf8").split("\n");

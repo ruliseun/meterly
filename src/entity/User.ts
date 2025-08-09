@@ -8,7 +8,8 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { RefreshToken } from "./Token";
-import { GenderEnum, MaritalStatusEnum, ProfileTypeEnum, UserStatusEnum } from "../enums/user-type.enum";
+import { UserStatusEnum } from "../enums/user-type.enum";
+import { ElectricityMeter } from "./Meter";
 
 @Entity()
 @Unique(["email"])
@@ -17,13 +18,7 @@ export class User {
   id: number;
 
   @Column({ type: "text", nullable: true })
-  firstName: string;
-
-  @Column({ type: "text", nullable: true })
-  middleName: string;
-
-  @Column({ type: "text", nullable: true })
-  lastName: string;
+  fullName: string;
 
   @Column({ type: "text", unique: true })
   email: string;
@@ -32,43 +27,19 @@ export class User {
   phone: string;
 
   @Column({ type: "text", nullable: true })
+  nin: string;
+
+  @Column({ type: "boolean", nullable: true, default: false })
+  isVerified: boolean;
+
+  @Column({ type: "boolean", nullable: true, default: false })
+  phoneNumberVerified: boolean;
+
+  @Column({ type: "text", nullable: true, default: "Nigeria" })
   country: string;
 
   @Column({ type: "text", nullable: true })
-  state: string;
-
-  @Column({ type: "text", nullable: true })
-  city: string;
-
-  @Column({ type: "text", nullable: true })
   address: string;
-
-  @Column({ type: "text", nullable: true })
-  dob: string;
-
-  @Column({ type: "text", nullable: true })
-  ageRange: string;
-
-  @Column({ type: "text", enum: GenderEnum, nullable: true })
-  gender: GenderEnum;
-
-  @Column({ type: "text", enum: MaritalStatusEnum, nullable: true })
-  maritalStatus: MaritalStatusEnum;
-
-  @Column({
-    type: "text",
-    enum: ProfileTypeEnum,
-    default: ProfileTypeEnum.MEMBER,
-    nullable: true,
-  })
-  profileType: ProfileTypeEnum;
-
-  @Column({
-    type: "text",
-    enum: ProfileTypeEnum,
-    nullable: true,
-  })
-  departmentProfileType: ProfileTypeEnum;
 
   @Column({
     type: "text",
@@ -79,9 +50,6 @@ export class User {
 
   @Column({ type: "text", nullable: true })
   password: string;
-
-  @Column({ type: "text", nullable: true })
-  photoUrl: string;
 
   @Column({ type: "text", nullable: true })
   userAgent: string;
@@ -105,4 +73,7 @@ export class User {
   // Relations
   @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user)
   refreshTokens: RefreshToken[];
+
+  @OneToMany(() => ElectricityMeter, (meter) => meter.user)
+  electricityMeters: ElectricityMeter[];
 }

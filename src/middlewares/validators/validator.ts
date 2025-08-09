@@ -1,4 +1,4 @@
-import { check } from "express-validator";
+import { check, param } from "express-validator";
 
 export const validateCustomRequest = (args: string[]) => {
   return args.map((option) => {
@@ -47,6 +47,19 @@ export const validateRequiredField = (field: string) => {
       .withMessage(`${field} must be a string`)
       .trim(),
   ];
+};
+
+export const validateRequiredParams = (params: string[]) => {
+  return params.map((paramName) => {
+    return param(paramName)
+      .exists()
+      .withMessage(`${paramName} is required`)
+      .notEmpty()
+      .withMessage(`${paramName} cannot be empty`)
+      .isString()
+      .withMessage(`${paramName} must be a string`)
+      .trim();
+  });
 };
 
 export const validateOptionalFields = (fields: string[]) => {

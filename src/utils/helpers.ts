@@ -31,11 +31,3 @@ export function manualDataPagination(data: any[], page: number, itemsPerPage: nu
     previous_page: hasPrevPage ? page - 1 : null,
   };
 }
-
-export function extractPermissions(userProfile: any) {
-  return (userProfile.role.permissions || []).map((perm: any) => perm.name);
-}
-
-export function isValidDobPattern(dateString: string): boolean {
-  return /^(0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])$/.test(dateString);
-}

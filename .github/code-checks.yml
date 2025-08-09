@@ -1,0 +1,61 @@
+name: CODE CHECKS
+
+on:
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  development-build:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ["18.x"]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint code
+        run: npm run lint
+
+      - name: Check Entity Column Types
+        run: |
+          node <<'EOF'
+          const fs = require('fs');
+          const glob = require('glob');
+
+          // Look for all TypeScript files under src/entity
+          const entityFiles = glob.sync("src/entity/**/*.ts", { ignore: ["node_modules/**", "dist/**"] });
+          let hasError = false;
+
+          entityFiles.forEach(file => {
+            const content = fs.readFileSync(file, 'utf8');
+            // Regex matches @Column(...), then captures the options block and the following property name.
+            const regex = /@Column\s*\(([\s\S]*?)\)\s*(?:\r?\n\s*)+([\w\d_]+)\s*:/g;
+            let match;
+
+            while ((match = regex.exec(content)) !== null) {
+              const options = match[1];
+              const columnName = match[2];
+              // Check if the options block contains a type definition
+              if (!/type\s*:\s*['"`]?\w+['"`]?/.test(options)) {
+                console.error(`Error in ${file}: Column '${columnName}' is missing a type definition in its @Column decorator.`);
+                hasError = true;
+              }
+            }
+          });
+
+          if (hasError) {
+            console.error("One or more columns are missing a type definition. Please fix them before merging.");
+            process.exit(1);
+          } else {
+            console.log("All columns in entity files have type definitions.");
+          }
+          EOF

@@ -14,12 +14,12 @@ import httpLogger from "./middlewares/httpLogger";
 
 export const appRoot = path.resolve();
 import initializeRoutes from "./routes";
-import { appVersion } from "./config/constants";
+import { appVersion, getAppVersion } from "./config/constants";
 import { Environments } from "./enums/env.enum";
 import { nodeEnv } from "./config/env";
 import Logger from "./utils/logger";
 import { AppDataSource } from "./data-source";
-import { connectDB } from "./config/database";
+import { connectAuditDB, connectDB } from "./config/database";
 
 const app: express.Application = express();
 
@@ -94,9 +94,11 @@ async function onListening() {
       Logger.error("Error running database migrations:", error);
     }
   }
+  await connectAuditDB();
   const addr = server.address();
   const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr?.port}`;
   console.info(`Server is listening on ${bind}`);
+  getAppVersion();
 }
 server.listen(port);
 server.on("error", onError);
