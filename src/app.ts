@@ -55,7 +55,7 @@ const errorHandler: express.ErrorRequestHandler = (err, _req, res) => {
 };
 app.use(errorHandler);
 
-const port = 3012;
+const port = process.env.PORT || 3012;
 app.set("port", port);
 
 const server = http.createServer(app);
