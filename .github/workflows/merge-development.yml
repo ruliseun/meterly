@@ -1,4 +1,4 @@
-name: Merge Development into staging
+name: Merge Development into Staging
 
 on:
   workflow_dispatch:
@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: true
 
       - name: Set up Git
         run: |
@@ -27,10 +28,8 @@ jobs:
       - name: Checkout staging branch
         run: git checkout staging
 
-      - name: Merge staging into staging
-        run: git merge origin/staging
+      - name: Merge development into staging
+        run: git merge origin/development --no-edit
 
       - name: Push changes to staging
         run: git push origin staging
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
