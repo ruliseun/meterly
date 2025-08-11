@@ -8,13 +8,14 @@ import { USER_MODEL } from "../config/database/db";
 import { ResponseCodeEnum } from "../enums/response-codes.enum";
 import OTPService from "./otp/otp.service";
 import Logger from "../utils/logger";
-import { ElectricityMeter } from "../entity/Meter";
+import { DiscoEnum, ElectricityMeter } from "../entity/Meter";
 import { toSentenceCase } from "../utils/formater";
 import ejs from "ejs";
 import { appRoot } from "../app";
 import { frontendBaseUrl } from "../config/env";
 import EmailService from "./email/email.service";
 import { UserStatusEnum } from "../enums/user-type.enum";
+import { getDiscoTariff } from "./meter-management/meter-management.service";
 
 type UserData = {
   fullName?: string;
@@ -267,9 +268,17 @@ async function updateRecord(user: string, data: { [key: string]: string | boolea
   return await USER_MODEL.save(userRecord);
 }
 
-async function getProfile(user: IUser) {
+async function getProfile(userProfile: IUser) {
+  const updatedMeters = userProfile.electricityMeters.map((meter: any) => {
+    const getTariff = getDiscoTariff(meter.disco || DiscoEnum.IKEDC);
+    return {
+      ...meter,
+      units: +meter.meterBalance > 0 ? parseFloat((+meter.meterBalance / getTariff).toFixed(2)) : 0.00
+    };
+  });
   return {
-    ...user,
+    ...userProfile,
+    electricityMeters: updatedMeters,
     password: undefined,
     password_reset: undefined,
     updatedAt: undefined,

@@ -16,4 +16,8 @@ export interface IEnv {
   frontendBaseUrl?: string | undefined;
   emailUser?: string | undefined;
   emailPassword?: string | undefined;
+  VT_API_KEY?: string | undefined;
+  VT_PUBLIC_KEY?: string | undefined;
+  VT_SECRET_KEY?: string | undefined;
+  PSK_SECRET?: string | undefined;
 }

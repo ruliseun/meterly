@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Meter Recharged Successfully - Meterly</title>
+</head>
+
+<body style="margin: 0; padding: 0; background-color: #f5f7fb; font-family: Arial, sans-serif;">
+   <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f5f7fb;">
+      <tr>
+         <td align="center" style="padding: 40px 20px;">
+            <table width="600" cellpadding="0" cellspacing="0" border="0"
+               style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+
+               <tr>
+                  <td style="padding: 40px 40px 20px; text-align: center;">
+                     <div
+                        style="width: 60px; height: 60px; background-color: #10b981; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: #ffffff; font-size: 24px; font-weight: bold;">✓</span>
+                     </div>
+                     <h2 style="margin: 0 0 8px; font-size: 24px; color: #111827;">Meter Recharged Successfully! ⚡</h2>
+                     <p style="margin: 0; font-size: 16px; color: #6b7280;">Your power has been topped up automatically
+                     </p>
+                  </td>
+               </tr>
+
+               <tr>
+                  <td style="padding: 0 40px 40px;">
+                     <p style="margin: 0 0 16px; font-size: 16px; line-height: 24px; color: #374151;">
+                        Hi <%= userName %>,
+                     </p>
+                     <p style="margin: 0 0 24px; font-size: 16px; line-height: 24px; color: #374151;">
+                        Great news! Your meter recharge was successful and the power units have been automatically
+                        added to your meter. You can now enjoy uninterrupted electricity.
+                     </p>
+
+                     <div
+                        style="background-color: #f8fafc; border: 1px solid #e5e7eb; border-radius: 8px; padding: 24px; margin: 24px 0;">
+                        <h3
+                           style="margin: 0 0 20px; font-size: 18px; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 12px;">
+                           📋 Recharge Details
+                        </h3>
+
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                           <tr>
+                              <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Meter
+                                 Number:</td>
+                              <td
+                                 style="padding: 8px 0; font-size: 14px; color: #111827; font-weight: 600; text-align: right;">
+                                 <%= meterNumber %>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Recharge
+                                 Amount:</td>
+                              <td
+                                 style="padding: 8px 0; font-size: 14px; color: #111827; font-weight: 600; text-align: right;">
+                                 ₦<%= amount.toLocaleString() %>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Units
+                                 Added:</td>
+                              <td
+                                 style="padding: 8px 0; font-size: 14px; color: #10b981; font-weight: 600; text-align: right;">
+                                 <%= unitsAdded %> kWh
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Transaction
+                                 ID:</td>
+                              <td
+                                 style="padding: 8px 0; font-size: 14px; color: #111827; font-weight: 600; text-align: right;">
+                                 <%= transactionId %>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Date &
+                                 Time:</td>
+                              <td
+                                 style="padding: 8px 0; font-size: 14px; color: #111827; font-weight: 600; text-align: right;">
+                                 <%= rechargeDate %>
+                              </td>
+                           </tr>
+                           <% if (tariffRate) { %>
+                              <tr>
+                                 <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Tariff
+                                    Rate:</td>
+                                 <td
+                                    style="padding: 8px 0; font-size: 14px; color: #111827; font-weight: 600; text-align: right;">
+                                    ₦<%= tariffRate %>/kWh</td>
+                              </tr>
+                              <% } %>
+                        </table>
+                     </div>
+
+                     <% if (currentBalance) { %>
+                        <div
+                           style="background-color: #ecfdf5; border: 1px solid #10b981; border-radius: 8px; padding: 20px; margin: 24px 0;">
+                           <h4
+                              style="margin: 0 0 8px; font-size: 16px; color: #111827; display: flex; align-items: center;">
+                              ⚡ Current Meter Balance
+                           </h4>
+                           <p style="margin: 0; font-size: 18px; color: #059669; font-weight: 700;">
+                              <%= currentBalance %> kWh
+                           </p>
+                           <p style="margin: 8px 0 0; font-size: 12px; color: #6b7280;">*Balance as of recharge
+                              completion</p>
+                        </div>
+                        <% } %>
+
+                           <div
+                              style="background-color: #fefce8; border: 1px solid #facc15; border-radius: 8px; padding: 16px; margin: 24px 0;">
+                              <p style="margin: 0; font-size: 14px; color: #92400e;">
+                                 💳 <strong>Payment Method:</strong>
+                                 <%= paymentMethod || 'Online Payment' %>
+                                    <% if (last4Digits) { %>
+                                       ending in *<%= last4Digits %>
+                                          <% } %>
+                              </p>
+                           </div>
+
+                           <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                              <tr>
+                                 <td align="center" style="padding: 32px 0 24px;">
+                                    <a href="<%= dashboardUrl %>"
+                                       style="display: inline-block; padding: 14px 28px; background-color: #2563eb; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 0 8px;">View
+                                       Dashboard</a>
+                                    <a href="<%= rechargeUrl %>"
+                                       style="display: inline-block; padding: 14px 28px; background-color: #10b981; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 0 8px;">Recharge
+                                       Again</a>
+                                 </td>
+                              </tr>
+                           </table>
+
+                           <div style="border-left: 4px solid #2563eb; padding-left: 16px; margin: 32px 0;">
+                              <h4 style="margin: 0 0 8px; font-size: 16px; color: #111827;">💡 Power Saving Tips:</h4>
+                              <ul
+                                 style="margin: 8px 0 0; padding-left: 16px; color: #6b7280; font-size: 14px; line-height: 20px;">
+                                 <li style="margin-bottom: 4px;">Turn off appliances when not in use to maximize your
+                                    units</li>
+                                 <li style="margin-bottom: 4px;">Consider setting up automatic recharge to avoid power
+                                    outages</li>
+                                 <li>Monitor your usage patterns in the dashboard for better planning</li>
+                              </ul>
+                           </div>
+
+                           <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
+
+                           <p style="margin: 16px 0 0; font-size: 14px; line-height: 20px; color: #6b7280;">
+                              If you have any questions about this transaction or need assistance with your meter,
+                              feel free to contact our support team anytime.
+                           </p>
+                           <p
+                              style="margin: 16px 0 0; font-size: 14px; line-height: 20px; color: #6b7280; font-weight: 500;">
+                              Thank you for choosing Meterly for your power needs!
+                           </p>
+                           <p
+                              style="margin: 8px 0 0; font-size: 14px; line-height: 20px; color: #6b7280; font-weight: 500;">
+                              The Meterly Team
+                           </p>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+
+      <%- include('shared-footer.ejs') %>
+   </table>
+</body>
+
+</html>

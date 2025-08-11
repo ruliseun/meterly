@@ -1,5 +1,7 @@
 import { check } from "express-validator";
 import { passwordStrength } from "../../config/constants";
+import EnumUtils from "../../utils/enum.utils";
+import { DiscoEnum } from "../../entity/Meter";
 
 export const validateLogin = [
   check("email")
@@ -133,8 +135,8 @@ export const validateCompleteOnboarding = [
     .isString()
     .withMessage("Disco must be a string")
     .toUpperCase()
-    .isIn(["EKEDC", "IKEDC", "AEDC", "IBEDC", "PHEDC", "JEDC", "KEDC", "BEDC"])
-    .withMessage("Invalid disco. Disco must be one of EKEDC, IKEDC, AEDC, IBEDC, PHEDC, JEDC, KEDC, BEDC")
+    .isIn(EnumUtils.extractEnumValues(DiscoEnum))
+    .withMessage("Invalid disco. Disco must be one of " + EnumUtils.extractEnumValues(DiscoEnum).join(", "))
     .trim(),
 ];
 
@@ -219,5 +221,35 @@ export const validateOTPValidator = [
     .withMessage("requestId cannot be empty")
     .isString()
     .withMessage("requestId must be a string")
+    .trim(),
+];
+
+export const validateVerifyMeter = [
+  check("disco")
+    .exists()
+    .withMessage("Disco is required")
+    .notEmpty()
+    .withMessage("Disco cannot be empty")
+    .isString()
+    .withMessage("Disco must be a string")
+    .toUpperCase()
+    .isIn(EnumUtils.extractEnumValues(DiscoEnum))
+    .withMessage("Invalid disco. Disco must be one of " + EnumUtils.extractEnumValues(DiscoEnum).join(", "))
+    .trim(),
+  check("meterNumber")
+    .exists()
+    .withMessage("Meter number is required")
+    .notEmpty()
+    .withMessage("Meter number cannot be empty")
+    .isString()
+    .withMessage("Meter number must be a string")
+    .trim(),
+  check("meterType")
+    .optional()
+    .isString()
+    .withMessage("Meter type must be a string")
+    .toLowerCase()
+    .isIn(["prepaid", "postpaid"])
+    .withMessage("Invalid meter type")
     .trim(),
 ];

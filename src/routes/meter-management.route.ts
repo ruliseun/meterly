@@ -3,7 +3,7 @@ import { authGuard } from "../middlewares/auth.guard";
 import { validateKey } from "../config/api-key.config";
 import { validate } from "../middlewares/validate-request";
 import MeterManagementController from "../controllers/meter-management/meter-management.controller";
-import { registerNewMeter } from "../middlewares/validators/meter-managemnt.validator";
+import { registerNewMeter, validatePaginationRequest, validatePskPayment, validateTopUp } from "../middlewares/validators/meter-managemnt.validator";
 import { validateRequiredParams } from "../middlewares/validators/validator";
 
 const router = Router();
@@ -17,6 +17,26 @@ router.delete(
   validateRequiredParams(["id"]),
   validate,
   MeterManagementController.removeMeter,
+);
+
+router.post(
+  "/recharge_meter",
+  validateKey,
+  authGuard(),
+  validateTopUp,
+  validate,
+  MeterManagementController.rechargeMeter,
+);
+
+router.get("/verify_payment", validatePskPayment, validate, MeterManagementController.verifyPskPayment);
+
+router.get(
+  "/transaction_record",
+  validateKey,
+  authGuard(),
+  validatePaginationRequest,
+  validate,
+  MeterManagementController.getTransactionRecord,
 );
 
 export default router;
