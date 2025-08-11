@@ -14,6 +14,7 @@ import {
 } from "./config/env";
 import { Environments } from "./enums/env.enum";
 import { ElectricityMeter } from "./entity/Meter";
+import { Transaction } from "./entity/Transactions";
 
 interface IDbConfig {
   host: string;
@@ -23,7 +24,7 @@ interface IDbConfig {
   database: string;
 }
 
-const dbEntities = [User, RefreshToken, ElectricityMeter];
+const dbEntities = [User, RefreshToken, ElectricityMeter, Transaction];
 
 let dbConfig: IDbConfig = {} as IDbConfig;
 

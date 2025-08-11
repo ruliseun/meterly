@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, Unique, OneToMany, CreateDateCo
 import { RefreshToken } from "./Token";
 import { UserStatusEnum } from "../enums/user-type.enum";
 import { ElectricityMeter } from "./Meter";
+import { Transaction } from "./Transactions";
 
 @Entity()
 @Unique(["email"])
@@ -68,4 +69,7 @@ export class User {
 
   @OneToMany(() => ElectricityMeter, (meter) => meter.user)
   electricityMeters: ElectricityMeter[];
+
+  @OneToMany(() => Transaction, (transaction) => transaction.user)
+  transactions: Transaction[];
 }

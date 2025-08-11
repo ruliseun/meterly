@@ -23,6 +23,7 @@ export enum DiscoEnum {
   JEDC = "JEDC",
   KEDC = "KEDC",
   BEDC = "BEDC",
+  EEDC = "EEDC",
 }
 
 @Entity()
@@ -53,6 +54,12 @@ export class ElectricityMeter {
 
   @Column({ type: "int", nullable: true })
   userId: number;
+
+  @Column({ type: "decimal", precision: 12, scale: 2, default: 0 })
+  meterBalance: number;
+
+  @Column({ type: "date", nullable: true })
+  lastRecharge: Date;
 
   @ManyToOne(() => User, (user) => user.electricityMeters, { onDelete: "CASCADE" })
   @JoinColumn({ name: "userId" })

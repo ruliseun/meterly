@@ -11,10 +11,12 @@ import {
   validateLogout,
   validateOTPValidator,
   validateResetPassword,
+  validateVerifyMeter,
 } from "../middlewares/validators/auth.validator";
 import AuthController from "../controllers/auth/auth.controller";
 import { validateRequiredParams } from "../middlewares/validators/validator";
 import { authGuard } from "../middlewares/auth.guard";
+import MeterManagementController from "../controllers/meter-management/meter-management.controller";
 
 const router = Router();
 
@@ -43,5 +45,6 @@ router.post(
   AuthController.completeOnboarding,
 );
 router.get("/profile", validateKey, authGuard(), AuthController.getProfile);
+router.post("/verify_meter", validateKey, validateVerifyMeter, validate, MeterManagementController.verifyMeterNumber);;
 
 export default router;

@@ -37,6 +37,13 @@ export const frontendBaseUrl = process.env.FRONTEND_BASE_URL;
 export const emailUser = process.env.EMAIL_USER;
 export const emailPassword = process.env.EMAIL_PASSWORD;
 
+// VTPASS
+export const VT_API_KEY = process.env.VT_API_KEY;
+export const VT_PUBLIC_KEY = process.env.VT_PUBLIC_KEY;
+export const VT_SECRET_KEY = process.env.VT_SECRET_KEY;
+
+export const PSK_SECRET = process.env.PSK_SECRET;
+
 export const TOKENS = {
   auth_token_secret: AUTH_TOKEN_SECRET,
   access_token_expiry: ACCESS_TOKEN_EXPIRY,
@@ -60,6 +67,10 @@ export const TOKENS = {
     frontendBaseUrl,
     emailUser,
     emailPassword,
+    VT_API_KEY,
+    VT_PUBLIC_KEY,
+    VT_SECRET_KEY,
+    PSK_SECRET,
   };
 
   const missing = Object.keys(requiredEnvs)
