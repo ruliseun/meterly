@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Daily Energy Usage Report - Meterly</title>
+</head>
+
+<body style="margin: 0; padding: 0; background-color: #f5f7fb; font-family: Arial, sans-serif;">
+   <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f5f7fb;">
+      <tr>
+         <td align="center" style="padding: 40px 20px;">
+            <table width="600" cellpadding="0" cellspacing="0" border="0"
+               style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+
+               <tr>
+                  <td style="padding: 40px 40px 20px; text-align: center;">
+                     <div
+                        style="width: 60px; height: 60px; background-color: #3b82f6; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: #ffffff; font-size: 24px; font-weight: bold;">📊</span>
+                     </div>
+                     <h2 style="margin: 0 0 8px; font-size: 24px; color: #111827;">Daily Energy Usage Report ⚡</h2>
+                     <p style="margin: 0; font-size: 16px; color: #6b7280;">Your power consumption summary for <%=
+                           reportDate %>
+                     </p>
+                  </td>
+               </tr>
+
+               <tr>
+                  <td style="padding: 0 40px 40px;">
+                     <p style="margin: 0 0 16px; font-size: 16px; line-height: 24px; color: #374151;">
+                        Hi <%= userName %>,
+                     </p>
+                     <p style="margin: 0 0 24px; font-size: 16px; line-height: 24px; color: #374151;">
+                        Here's your daily energy usage summary. Stay informed about your power consumption patterns to
+                        optimize your electricity usage.
+                     </p>
+
+                     <div
+                        style="background-color: #f0f9ff; border: 1px solid #3b82f6; border-radius: 8px; padding: 24px; margin: 24px 0;">
+                        <h3
+                           style="margin: 0 0 20px; font-size: 18px; color: #1e40af; border-bottom: 2px solid #bfdbfe; padding-bottom: 12px;">
+                           📋 Usage Summary
+                        </h3>
+
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                           <tr>
+                              <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Meter
+                                 Number:</td>
+                              <td
+                                 style="padding: 8px 0; font-size: 14px; color: #111827; font-weight: 600; text-align: right;">
+                                 <%= meterNumber %>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Energy
+                                 Consumed:</td>
+                              <td
+                                 style="padding: 8px 0; font-size: 16px; color: #1e40af; font-weight: 700; text-align: right;">
+                                 <%= dailyUsage %> kWh
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Cost:</td>
+                              <td
+                                 style="padding: 8px 0; font-size: 14px; color: #111827; font-weight: 600; text-align: right;">
+                                 ₦<%= dailyCost.toLocaleString() %>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Average
+                                 Hourly:</td>
+                              <td
+                                 style="padding: 8px 0; font-size: 14px; color: #111827; font-weight: 600; text-align: right;">
+                                 <%= averageHourly %> kWh/hr
+                              </td>
+                           </tr>
+                           <% if (peakHour) { %>
+                              <tr>
+                                 <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Peak
+                                    Hour:</td>
+                                 <td
+                                    style="padding: 8px 0; font-size: 14px; color: #111827; font-weight: 600; text-align: right;">
+                                    <%= peakHour %>
+                                 </td>
+                              </tr>
+                              <% } %>
+                        </table>
+                     </div>
+
+                     <div
+                        style="background-color: #f8fafc; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin: 24px 0;">
+                        <h4 style="margin: 0 0 12px; font-size: 16px; color: #111827;">📈 Usage Comparison</h4>
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                           <tr>
+                              <td style="padding: 6px 0; font-size: 13px; color: #6b7280;">Yesterday:</td>
+                              <td style="padding: 6px 0; font-size: 13px; color: #111827; text-align: right;">
+                                 <%= yesterdayUsage %> kWh
+                              </td>
+                              <td style="padding: 6px 0; font-size: 12px; text-align: right;">
+                                 <span style="color: <%= comparisonColor %>; font-weight: 600;">
+                                    <%= usageComparison %>
+                                 </span>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="padding: 6px 0; font-size: 13px; color: #6b7280;">7-Day Average:</td>
+                              <td style="padding: 6px 0; font-size: 13px; color: #111827; text-align: right;">
+                                 <%= weeklyAverage %> kWh
+                              </td>
+                              <td style="padding: 6px 0; font-size: 12px; text-align: right;">
+                                 <span style="color: <%= weeklyComparisonColor %>; font-weight: 600;">
+                                    <%= weeklyComparison %>
+                                 </span>
+                              </td>
+                           </tr>
+                        </table>
+                     </div>
+
+                     <div
+                        style="background-color: #ecfdf5; border: 1px solid #10b981; border-radius: 8px; padding: 20px; margin: 24px 0;">
+                        <h4
+                           style="margin: 0 0 8px; font-size: 16px; color: #111827; display: flex; align-items: center;">
+                           ⚡ Current Balance
+                        </h4>
+                        <p style="margin: 0; font-size: 18px; color: #059669; font-weight: 700;">
+                           <%= currentBalance %> kWh
+                        </p>
+                        <p style="margin: 8px 0 0; font-size: 12px; color: #6b7280;">
+                           Estimated days remaining: <%= estimatedDays %> days
+                        </p>
+                     </div>
+
+                     <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                        <tr>
+                           <td align="center" style="padding: 32px 0 24px;">
+                              <a href="<%= dashboardUrl %>"
+                                 style="display: inline-block; padding: 14px 28px; background-color: #3b82f6; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 0 8px;">View
+                                 Detailed Report</a>
+                              <a href="<%= rechargeUrl %>"
+                                 style="display: inline-block; padding: 14px 28px; background-color: #10b981; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 0 8px;">Top
+                                 Up</a>
+                           </td>
+                        </tr>
+                     </table>
+
+                     <div style="border-left: 4px solid #3b82f6; padding-left: 16px; margin: 32px 0;">
+                        <h4 style="margin: 0 0 8px; font-size: 16px; color: #111827;">💡 Energy Saving Tips:</h4>
+                        <ul
+                           style="margin: 8px 0 0; padding-left: 16px; color: #6b7280; font-size: 14px; line-height: 20px;">
+                           <li style="margin-bottom: 4px;">Your peak usage is at <%= peakHour || 'evening hours' %> -
+                                 consider shifting non-essential appliances</li>
+                           <li style="margin-bottom: 4px;">Unplug devices when not in use to reduce standby consumption
+                           </li>
+                           <li>Use energy-efficient appliances to optimize your daily consumption</li>
+                        </ul>
+                     </div>
+
+                     <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
+
+                     <p style="margin: 16px 0 0; font-size: 14px; line-height: 20px; color: #6b7280;">
+                        Want to receive these reports at a different time or frequency? Update your preferences in the
+                        dashboard.
+                     </p>
+                     <p style="margin: 16px 0 0; font-size: 14px; line-height: 20px; color: #6b7280; font-weight: 500;">
+                        Stay powered with Meterly!
+                     </p>
+                     <p style="margin: 8px 0 0; font-size: 14px; line-height: 20px; color: #6b7280; font-weight: 500;">
+                        The Meterly Team
+                     </p>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+
+      <%- include('shared-footer.ejs') %>
+   </table>
+</body>
+
+</html>
