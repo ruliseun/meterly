@@ -19,6 +19,7 @@ import { nodeEnv } from "./config/env";
 import Logger from "./utils/logger";
 import { AppDataSource } from "./data-source";
 import { connectAuditDB, connectDB } from "./config/database";
+import { startScheduler } from "./utils/scheduler";
 
 const app: express.Application = express();
 
@@ -98,6 +99,7 @@ async function onListening() {
   const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr?.port}`;
   console.info(`Server is listening on ${bind}`);
   getAppVersion();
+  await startScheduler();
 }
 server.listen(port);
 server.on("error", onError);

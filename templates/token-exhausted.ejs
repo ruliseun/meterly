@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Power Units Exhausted - Meterly</title>
+</head>
+
+<body style="margin: 0; padding: 0; background-color: #f5f7fb; font-family: Arial, sans-serif;">
+   <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f5f7fb;">
+      <tr>
+         <td align="center" style="padding: 40px 20px;">
+            <table width="600" cellpadding="0" cellspacing="0" border="0"
+               style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+
+               <tr>
+                  <td style="padding: 40px 40px 20px; text-align: center;">
+                     <div
+                        style="width: 60px; height: 60px; background-color: #ef4444; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: #ffffff; font-size: 24px; font-weight: bold;">⚠</span>
+                     </div>
+                     <h2 style="margin: 0 0 8px; font-size: 24px; color: #111827;">Power Units Exhausted! 🔋</h2>
+                     <p style="margin: 0; font-size: 16px; color: #6b7280;">Your meter needs immediate top-up
+                     </p>
+                  </td>
+               </tr>
+
+               <tr>
+                  <td style="padding: 0 40px 40px;">
+                     <p style="margin: 0 0 16px; font-size: 16px; line-height: 24px; color: #374151;">
+                        Hi <%= userName %>,
+                     </p>
+                     <p style="margin: 0 0 24px; font-size: 16px; line-height: 24px; color: #374151;">
+                        Your power units have been exhausted and your meter needs immediate attention. Please top up now
+                        to avoid power interruption.
+                     </p>
+
+                     <div
+                        style="background-color: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 24px; margin: 24px 0;">
+                        <h3
+                           style="margin: 0 0 20px; font-size: 18px; color: #dc2626; border-bottom: 2px solid #fecaca; padding-bottom: 12px;">
+                           📊 Meter Status
+                        </h3>
+
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                           <tr>
+                              <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Meter
+                                 Number:</td>
+                              <td
+                                 style="padding: 8px 0; font-size: 14px; color: #111827; font-weight: 600; text-align: right;">
+                                 <%= meterNumber %>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Current
+                                 Balance:</td>
+                              <td
+                                 style="padding: 8px 0; font-size: 14px; color: #dc2626; font-weight: 600; text-align: right;">
+                                 <%= currentBalance %> kWh
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="padding: 8px 0; font-size: 14px; color: #6b7280; font-weight: 500;">Last
+                                 Updated:</td>
+                              <td
+                                 style="padding: 8px 0; font-size: 14px; color: #111827; font-weight: 600; text-align: right;">
+                                 <%= lastUpdated %>
+                              </td>
+                           </tr>
+                        </table>
+                     </div>
+
+                     <div
+                        style="background-color: #fee2e2; border: 1px solid #dc2626; border-radius: 8px; padding: 20px; margin: 24px 0;">
+                        <h4
+                           style="margin: 0 0 8px; font-size: 16px; color: #dc2626; display: flex; align-items: center;">
+                           🚨 Urgent Action Required
+                        </h4>
+                        <p style="margin: 0; font-size: 14px; color: #7f1d1d; line-height: 20px;">
+                           Your power will be disconnected soon. Please recharge immediately to maintain electricity
+                           supply.
+                        </p>
+                     </div>
+
+                     <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                        <tr>
+                           <td align="center" style="padding: 32px 0 24px;">
+                              <a href="<%= rechargeUrl %>"
+                                 style="display: inline-block; padding: 16px 32px; background-color: #ef4444; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 0 8px;">Recharge
+                                 Now</a>
+                              <a href="<%= dashboardUrl %>"
+                                 style="display: inline-block; padding: 16px 32px; background-color: #6b7280; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; margin: 0 8px;">View
+                                 Dashboard</a>
+                           </td>
+                        </tr>
+                     </table>
+
+                     <div style="border-left: 4px solid #ef4444; padding-left: 16px; margin: 32px 0;">
+                        <h4 style="margin: 0 0 8px; font-size: 16px; color: #111827;">💡 Avoid Future Interruptions:
+                        </h4>
+                        <ul
+                           style="margin: 8px 0 0; padding-left: 16px; color: #6b7280; font-size: 14px; line-height: 20px;">
+                           <li style="margin-bottom: 4px;">Set up automatic recharge to avoid running out of units</li>
+                           <li style="margin-bottom: 4px;">Enable low balance notifications to get early warnings</li>
+                           <li>Monitor your usage patterns in the dashboard</li>
+                        </ul>
+                     </div>
+
+                     <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
+
+                     <p style="margin: 16px 0 0; font-size: 14px; line-height: 20px; color: #6b7280;">
+                        Need help with your recharge? Contact our support team for immediate assistance.
+                     </p>
+                     <p style="margin: 16px 0 0; font-size: 14px; line-height: 20px; color: #6b7280; font-weight: 500;">
+                        The Meterly Team
+                     </p>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+
+      <%- include('shared-footer.ejs') %>
+   </table>
+</body>
+
+</html>
