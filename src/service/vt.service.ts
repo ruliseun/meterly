@@ -47,6 +47,7 @@ function getServiceId(disco: string) {
          serviceId = DiscoServiceCodeEnum.IBEDC
          break;
       case DiscoEnum.IKEDC:
+      case DiscoEnum.IE:
          serviceId = DiscoServiceCodeEnum.IKEDC
          break;
       case DiscoEnum.JEDC:

@@ -212,11 +212,11 @@ async function verifyPskPayment(reference: string, res: Response) {
       rechargeDate: new Date(),
       tariffRate: paymentMetadata.tariff,
       currentBalance: newUnitBalance,
-      dashboardUrl: `${frontendBaseUrl}/`,
+      dashboardUrl: `${frontendBaseUrl}/dashboard`,
       paymentMethod: null,
       errorMessage: null,
       last4Digits: null,
-      rechargeUrl: `${frontendBaseUrl}/recharge`,
+      rechargeUrl: `${frontendBaseUrl}/landing-page`,
     });
     EmailService.sendMail({
       receiverEmail: paymentMetadata.email,
@@ -263,6 +263,7 @@ export function getDiscoTariff(disco: string) {
   let tariff = 0;
   switch (disco) {
     case DiscoEnum.IKEDC:
+    case DiscoEnum.IE:
     case DiscoEnum.EKEDC:
       tariff = +process.env.BAND_A_TARIFF! || 0;
       break

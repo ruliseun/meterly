@@ -7,6 +7,7 @@ import EmailService from "./email/email.service";
 import ejs from "ejs"
 import { User } from "../entity/User";
 import { getDiscoTariff } from "./meter-management/meter-management.service";
+import { frontendBaseUrl } from "src/config/env";
 
 async function chargeDailyUsage() {
    try {
@@ -44,8 +45,8 @@ const sendLowBalanceNotice = async (meter: any) => {
      meterNumber: meter.meterNumber,
      currentBalance: parseFloat((+meter.meterBalance / getTariff).toFixed(2)) || 0.0,
      lastUpdated: formatDateWithTime(lastUpdated),
-     rechargeUrl: "https://meterly.com/recharge",
-     dashboardUrl: "https://meterly.com/dashboard",
+     rechargeUrl: `${frontendBaseUrl}/landing-page`,
+     dashboardUrl: `${frontendBaseUrl}/dashboard`,
    });
 
    await EmailService.sendMail({
@@ -79,8 +80,8 @@ const sendDailyUsageNotice = async (meter: any) => {
      weeklyComparisonColor: "#10b981",
      currentBalance: parseFloat((+meter.meterBalance / getTariff).toFixed(2)) || 0.0,
      estimatedDays: "3",
-     dashboardUrl: "https://meterly.com/dashboard",
-     rechargeUrl: "https://meterly.com/recharge",
+     rechargeUrl: `${frontendBaseUrl}/landing-page`,
+     dashboardUrl: `${frontendBaseUrl}/dashboard`,
    });
 
    await EmailService.sendMail({

@@ -224,7 +224,7 @@ async function completeOnboarding(data: { token: string } & UserData, userAgent:
 
     const emailTemplate = await ejs.renderFile(`${appRoot}${welcomeEmailTemplate}`, {
       userName,
-      dashboardUrl: `${frontendBaseUrl}/app`,
+      dashboardUrl: `${frontendBaseUrl}/landing-page`,
     });
 
     await EmailService.sendMail({

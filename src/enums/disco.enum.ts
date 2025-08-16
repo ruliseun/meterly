@@ -8,4 +8,5 @@ export enum DiscoServiceCodeEnum {
   KEDC = "kano-electric",
   BEDC = "benin-electric",
   EEDC = "enugu-electric",
+  IE = "ikeja-electric",
 }
