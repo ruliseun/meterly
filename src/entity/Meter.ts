@@ -24,6 +24,7 @@ export enum DiscoEnum {
   KEDC = "KEDC",
   BEDC = "BEDC",
   EEDC = "EEDC",
+  IE = "IKEDC",
 }
 
 @Entity()
