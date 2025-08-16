@@ -7,7 +7,7 @@ import EmailService from "./email/email.service";
 import ejs from "ejs"
 import { User } from "../entity/User";
 import { getDiscoTariff } from "./meter-management/meter-management.service";
-import { frontendBaseUrl } from "src/config/env";
+import { frontendBaseUrl } from "../config/env";
 
 async function chargeDailyUsage() {
    try {
